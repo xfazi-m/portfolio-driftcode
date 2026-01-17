@@ -56,7 +56,149 @@
             }
         }
     </script>
+<style>
+    /* Całkowite ukrycie systemowego kursora */
+    @media (pointer: fine) {
+        body, a, button, [onclick], .tech-card, .group {
+            cursor: none !important;
+        }
+    }
 
+    /* Główny kontener kursora - minimalistyczny pierścień */
+    #custom-cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        border: 1.5px solid rgba(225, 29, 72, 0.8);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 10000;
+        transition: 
+            width 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+            height 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+            background-color 0.4s ease,
+            border-color 0.4s ease,
+            opacity 0.4s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Środkowy punkt - precyzyjny celownik */
+    #custom-cursor::after {
+        content: '';
+        width: 3px;
+        height: 3px;
+        background: #E11D48;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    /* Subtelna poświata podążająca za kursorem */
+    #cursor-glow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(225, 29, 72, 0.05) 0%, rgba(225, 29, 72, 0) 60%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+    /* Stan HOVER - Profesjonalny efekt Glass */
+    #custom-cursor.active {
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    #custom-cursor.active::after {
+        transform: scale(0); /* Punkt znika przy hoverze dla czystości */
+        opacity: 0;
+    }
+</style>
+
+<!-- 2. WKLEJ ZARAZ PO <body> -->
+<div id="cursor-glow"></div>
+<div id="custom-cursor"></div>
+
+<!-- 3. WKLEJ NA KONIEC <script> -->
+<script>
+    const cursor = document.getElementById('custom-cursor');
+    const glow = document.getElementById('cursor-glow');
+    
+    let mouseX = 0, mouseY = 0; // Pozycja myszy
+    let curX = 0, curY = 0;     // Pozycja kursora
+    let isMoving = false;
+    let idleTimer;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Pokaż poświatę i kursor przy ruchu
+        glow.style.opacity = '1';
+        cursor.style.opacity = '1';
+        glow.style.left = mouseX + 'px';
+        glow.style.top = mouseY + 'px';
+
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => {
+            if(!cursor.classList.contains('active')) {
+                cursor.style.opacity = '0.4'; // Przygaszenie gdy kursor stoi
+            }
+        }, 2000);
+    });
+
+    // Płynna animacja podążania (Linear Interpolation)
+    function render() {
+        const ease = 0.12; // Współczynnik płynności - im mniejszy, tym bardziej "maślany" ruch
+        
+        curX += (mouseX - curX) * ease;
+        curY += (mouseY - curY) * ease;
+        
+        cursor.style.transform = `translate(${curX - cursor.offsetWidth/2}px, ${curY - cursor.offsetHeight/2}px)`;
+        
+        requestAnimationFrame(render);
+    }
+    render();
+
+    // Wykrywanie interakcji
+    const setupInteractions = () => {
+        const selectors = 'a, button, .group, .tech-card, [onclick], input, select';
+        const elements = document.querySelectorAll(selectors);
+        
+        elements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+                glow.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+                glow.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+    };
+
+    // Inicjalizacja
+    setupInteractions();
+
+    // Obsługa wyjścia z okna
+    document.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+        glow.style.opacity = '0';
+    });
+</script>
     <style>
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #050505; }
