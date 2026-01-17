@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | Koxnes </title>
     
-    <!-- Import Tailwind CSS -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Import FontAwesome Icons -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Import Google Fonts -->
+
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 
     <script>
@@ -57,14 +56,14 @@
         }
     </script>
 <style>
-    /* Całkowite ukrycie systemowego kursora */
+ 
     @media (pointer: fine) {
         body, a, button, [onclick], .tech-card, .group {
             cursor: none !important;
         }
     }
 
-    /* Główny kontener kursora - minimalistyczny pierścień */
+
     #custom-cursor {
         position: fixed;
         top: 0;
@@ -86,7 +85,7 @@
         justify-content: center;
     }
 
-    /* Środkowy punkt - precyzyjny celownik */
+
     #custom-cursor::after {
         content: '';
         width: 3px;
@@ -96,7 +95,7 @@
         transition: all 0.3s ease;
     }
 
-    /* Subtelna poświata podążająca za kursorem */
+
     #cursor-glow {
         position: fixed;
         top: 0;
@@ -112,7 +111,7 @@
         transition: opacity 1s ease;
     }
 
-    /* Stan HOVER - Profesjonalny efekt Glass */
+
     #custom-cursor.active {
         width: 70px;
         height: 70px;
@@ -123,22 +122,22 @@
     }
 
     #custom-cursor.active::after {
-        transform: scale(0); /* Punkt znika przy hoverze dla czystości */
+        transform: scale(0); 
         opacity: 0;
     }
 </style>
 
-<!-- 2. WKLEJ ZARAZ PO <body> -->
+
 <div id="cursor-glow"></div>
 <div id="custom-cursor"></div>
 
-<!-- 3. WKLEJ NA KONIEC <script> -->
+
 <script>
     const cursor = document.getElementById('custom-cursor');
     const glow = document.getElementById('cursor-glow');
     
-    let mouseX = 0, mouseY = 0; // Pozycja myszy
-    let curX = 0, curY = 0;     // Pozycja kursora
+    let mouseX = 0, mouseY = 0; 
+    let curX = 0, curY = 0;     
     let isMoving = false;
     let idleTimer;
 
@@ -146,7 +145,7 @@
         mouseX = e.clientX;
         mouseY = e.clientY;
         
-        // Pokaż poświatę i kursor przy ruchu
+      
         glow.style.opacity = '1';
         cursor.style.opacity = '1';
         glow.style.left = mouseX + 'px';
@@ -155,14 +154,14 @@
         clearTimeout(idleTimer);
         idleTimer = setTimeout(() => {
             if(!cursor.classList.contains('active')) {
-                cursor.style.opacity = '0.4'; // Przygaszenie gdy kursor stoi
+                cursor.style.opacity = '0.4';
             }
         }, 2000);
     });
 
-    // Płynna animacja podążania (Linear Interpolation)
+   
     function render() {
-        const ease = 0.12; // Współczynnik płynności - im mniejszy, tym bardziej "maślany" ruch
+        const ease = 0.12; 
         
         curX += (mouseX - curX) * ease;
         curY += (mouseY - curY) * ease;
@@ -173,7 +172,7 @@
     }
     render();
 
-    // Wykrywanie interakcji
+  
     const setupInteractions = () => {
         const selectors = 'a, button, .group, .tech-card, [onclick], input, select';
         const elements = document.querySelectorAll(selectors);
@@ -190,10 +189,10 @@
         });
     };
 
-    // Inicjalizacja
+  
     setupInteractions();
 
-    // Obsługa wyjścia z okna
+ 
     document.addEventListener('mouseleave', () => {
         cursor.style.opacity = '0';
         glow.style.opacity = '0';
@@ -260,7 +259,7 @@
 </head>
 <body class="bg-brand-dark text-white overflow-x-hidden antialiased font-sans">
 
-    <!-- EKRAN ŁADOWANIA -->
+   
     <div id="loader" class="fixed inset-0 z-[200] bg-brand-dark flex flex-col items-center justify-center">
         <div class="relative w-16 h-16 mb-6">
             <div class="absolute inset-0 border-2 border-white/5 rounded-xl"></div>
@@ -270,14 +269,14 @@
         <span class="text-[9px] font-black uppercase tracking-[0.6em] text-white/30 animate-pulse">Inicjalizacja Systemu</span>
     </div>
 
-    <!-- TŁO -->
+   
     <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
         <div class="absolute inset-0 bg-tech-grid opacity-40"></div>
         <div class="absolute top-[-15%] left-[-10%] w-[800px] h-[800px] bg-brand-red/10 rounded-full blur-[150px] animate-slow-float"></div>
         <div class="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-brand-red/5 rounded-full blur-[120px]"></div>
     </div>
 
-    <!-- NAWIGACJA -->
+  
     <nav class="fixed top-0 w-full z-50 bg-brand-dark/60 backdrop-blur-xl border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3 group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
@@ -333,7 +332,7 @@
             </div>
         </section>
 
-        <!-- MODUŁY -->
+      
         <section id="modules" class="py-32 px-6">
             <div class="max-w-7xl mx-auto">
                 <div class="reveal mb-24 text-center md:text-left">
@@ -342,7 +341,6 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
                     
-                    <!-- KARTA DISCORD -->
                     <div class="reveal lg:col-span-12 group tech-card bg-brand-surface border border-brand-border rounded-[32px] p-8 md:p-12 cursor-pointer overflow-hidden" onclick="openModal('discord')">
                         <div class="flex flex-col lg:flex-row items-center justify-between gap-10 relative z-10">
                             <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-left">
@@ -366,7 +364,7 @@
                         </div>
                     </div>
 
-                    <!-- KARTA MINECRAFT -->
+                    
                     <div class="reveal stagger-1 lg:col-span-6 group tech-card bg-brand-surface border border-brand-border rounded-[32px] p-12 cursor-pointer" onclick="openModal('minecraft')">
                         <div class="flex flex-col h-full justify-between gap-12">
                             <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-gray-700 group-hover:text-brand-red transition-all duration-500 animate-icon-float">
@@ -382,7 +380,7 @@
                         </div>
                     </div>
 
-                    <!-- KARTA CLOUD -->
+                   
                     <div class="reveal stagger-2 lg:col-span-6 group tech-card bg-brand-surface border border-brand-border rounded-[32px] p-12 cursor-pointer" onclick="openModal('hosting')">
                         <div class="flex flex-col h-full justify-between gap-12">
                             <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-gray-700 group-hover:text-brand-red transition-all duration-500 animate-icon-float">
@@ -402,7 +400,7 @@
             </div>
         </section>
 
-        <!-- O MNIE -->
+       
         <section id="about" class="py-32 px-6 relative overflow-hidden">
             <div class="max-w-6xl mx-auto relative z-10">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
@@ -420,7 +418,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
-                        <!-- STATYSTYKA 1 -->
+                       
                         <div class="reveal stagger-1 glass-panel p-10 rounded-[32px] border-l-4 border-brand-red group hover:translate-x-4 transition-all duration-500">
                             <div class="flex items-center justify-between">
                                 <div>
@@ -432,7 +430,7 @@
                             <p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-600 mt-4 italic">Lat Doświadczenia</p>
                         </div>
 
-                        <!-- STATYSTYKA 2 -->
+                       
                         <div class="reveal stagger-2 glass-panel p-10 rounded-[32px] border-l-4 border-brand-red group hover:translate-x-4 transition-all duration-500">
                             <div class="flex items-center justify-between">
                                 <div>
@@ -451,7 +449,7 @@
 
     </main>
 
-    <!-- STOPKA -->
+   
     <footer class="py-16 px-6 border-t border-white/5 bg-brand-dark/50">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-center gap-10 text-center md:text-left mb-10">
@@ -462,7 +460,7 @@
             
             <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-gray-700 text-[9px] font-black uppercase tracking-widest">&copy; 2026 KOXNES. Wszelkie prawa zastrzeżone.</p>
-                <!-- ZAPROJEKTOWANE PRZEZ XFAZE -->
+              
                 <div class="flex items-center gap-2 group cursor-default">
                     <span class="text-gray-700 text-[9px] font-black uppercase tracking-widest">Projekt i wykonanie:</span>
                        <a href="https://xfazi-m.github.io/portfolio/" class="text-[9px] font-black uppercase tracking-widest text-white/40 group-hover:text-brand-red transition-colors italic decoration-brand-red/20 underline-offset-4 hover:underline">X_FAZI</a>
@@ -518,9 +516,9 @@
         </div>
     </div>
 
-    <!-- SKRYPTY -->
+   
     <script>
-        // Preloader - ukrywanie po załadowaniu
+        
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
             setTimeout(() => {
@@ -530,7 +528,7 @@
             }, 1000);
         });
 
-        // Obsługa Modali
+        
         function openModal(id) {
             const modal = document.getElementById(`modal-${id}`);
             const minecraftModal = document.getElementById('modal-minecraft');
@@ -553,7 +551,7 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Animacja Liczników
+        
         let countersAnimated = false;
         function animateCounters() {
             if (countersAnimated) return;
@@ -577,7 +575,7 @@
             countersAnimated = true;
         }
 
-        // System ujawniania elementów (Scroll Reveal)
+        
         function handleReveal() {
             const reveals = document.querySelectorAll('.reveal');
             
@@ -595,7 +593,7 @@
             reveals.forEach(reveal => observer.observe(reveal));
         }
 
-        // Zamykanie modali klawiszem ESC
+       
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeModal('discord');
